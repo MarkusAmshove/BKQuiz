@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">BKQuiz</string>
+    <string name="app_name">BK-Programmierung Quiz</string>
+    <string name="hochschullogo">Hochschul Logo</string>
 </resources>
