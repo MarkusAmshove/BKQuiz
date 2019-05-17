@@ -1,10 +1,13 @@
 package de.hsosnabrueck.bkquiz;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
+
+import de.hsosnabrueck.bkquiz.activities.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                zeigeLogin();
             }
         }
         .start();
+    }
+
+    private void zeigeLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
