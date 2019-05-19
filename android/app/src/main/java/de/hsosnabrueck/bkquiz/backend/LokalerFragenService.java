@@ -1,13 +1,22 @@
 package de.hsosnabrueck.bkquiz.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class LokalerFragenService implements IFragenService {
-    private static List<Frage> fragen = new ArrayList<>();
+    private static final Map<String, SpielerStatistik> STATISTIKEN = new HashMap<>();
+    private static final List<Frage> fragen = new ArrayList<>();
+
+    private final SpielKontext kontext;
 
     private Random zufallsGenerator = new Random();
+
+    public LokalerFragenService(SpielKontext kontext) {
+        this.kontext = kontext;
+    }
 
     public List<Frage> ermittleFragen() {
         return fragen;
@@ -19,7 +28,22 @@ public class LokalerFragenService implements IFragenService {
     }
 
     public boolean beantworte(Frage frage, Antwort antwort) {
-        return frage.getAntwort().getAntwort().equals(antwort.getAntwort());
+        boolean istKorrekt = frage.getAntwort().getAntwort().equals(antwort.getAntwort());
+
+        SpielerStatistik statistik = STATISTIKEN.get(kontext.getSpielername());
+        if(statistik != null) {
+            statistik.neueAntwort(istKorrekt);
+        }
+
+        return istKorrekt;
+    }
+
+    public SpielerStatistik ermittleStatistik(String spielername) {
+        if(!STATISTIKEN.containsKey(spielername)) {
+            STATISTIKEN.put(spielername, new SpielerStatistik(0, 0));
+        }
+
+        return STATISTIKEN.get(spielername);
     }
 
     static {

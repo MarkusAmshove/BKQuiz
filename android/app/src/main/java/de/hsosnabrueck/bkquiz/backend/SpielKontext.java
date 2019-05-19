@@ -6,7 +6,7 @@ public class SpielKontext {
 
     public SpielKontext(String spielername) {
         this.spielername = spielername;
-        this.fragenService = new LokalerFragenService();
+        this.fragenService = new LokalerFragenService(this);
     }
 
     public String getSpielername() {
