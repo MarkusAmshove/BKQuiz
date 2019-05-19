@@ -2,20 +2,20 @@ package de.hsosnabrueck.bkquiz.backend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class LokalerFragenService implements IFragenService {
-    private static int aktuellerIndex = 0;
-
     private static List<Frage> fragen = new ArrayList<>();
+
+    private Random zufallsGenerator = new Random();
 
     public List<Frage> ermittleFragen() {
         return fragen;
     }
 
     public Frage naechsteFrage() {
-        Frage frage = fragen.get(aktuellerIndex % fragen.size());
-        aktuellerIndex++;
-        return frage;
+        int index = zufallsGenerator.nextInt(fragen.size());
+        return fragen.get(index);
     }
 
     public boolean beantworte(Frage frage, Antwort antwort) {

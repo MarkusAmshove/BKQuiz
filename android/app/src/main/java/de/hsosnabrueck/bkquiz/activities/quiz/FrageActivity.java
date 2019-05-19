@@ -36,9 +36,6 @@ public class FrageActivity extends AppCompatActivity {
     }
 
     private void neueFrage() {
-
-
-
         Frage frage = spielKontext.getFragenService().naechsteFrage();
 
         TextView frageText = findViewById(R.id.frageText);
