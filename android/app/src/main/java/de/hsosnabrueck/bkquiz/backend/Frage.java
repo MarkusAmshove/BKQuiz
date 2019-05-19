@@ -1,6 +1,7 @@
 package de.hsosnabrueck.bkquiz.backend;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Frage {
@@ -12,6 +13,7 @@ public class Frage {
         this.frage = frage;
         this.antwort = antwort;
         this.antwortMoeglichkeiten = Arrays.asList(antwortMoeglichkeiten);
+        Collections.shuffle(this.antwortMoeglichkeiten);
     }
 
     public Antwort getAntwort() {
