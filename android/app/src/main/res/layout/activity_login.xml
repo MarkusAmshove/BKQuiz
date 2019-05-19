@@ -14,18 +14,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:hint="Spielername"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Spielername" />
+        android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:enabled="false"
         android:layout_marginTop="100dp"
         android:onClick="onLogin"
         android:text="Login" />
