@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface IFragenService {
     Frage naechsteFrage();
-    boolean istKorrekt(Frage frage, Antwort antwort);
+    boolean beantworte(Frage frage, Antwort antwort);
 }

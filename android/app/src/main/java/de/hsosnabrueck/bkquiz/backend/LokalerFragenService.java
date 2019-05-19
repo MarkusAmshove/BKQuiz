@@ -18,7 +18,7 @@ public class LokalerFragenService implements IFragenService {
         return frage;
     }
 
-    public boolean istKorrekt(Frage frage, Antwort antwort) {
+    public boolean beantworte(Frage frage, Antwort antwort) {
         return frage.getAntwort().getAntwort().equals(antwort.getAntwort());
     }
 

@@ -1,16 +1,12 @@
 package de.hsosnabrueck.bkquiz.activities.quiz;
 
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.StackView;
 import android.widget.TextView;
 
 import de.hsosnabrueck.bkquiz.R;
@@ -64,7 +60,7 @@ public class FrageActivity extends AppCompatActivity {
 
         Antwort antwort = antwortButton.getAntwort();
 
-        if (spielKontext.getFragenService().istKorrekt(antwortButton.getFrage(), antwortButton.getAntwort())) {
+        if (spielKontext.getFragenService().beantworte(antwortButton.getFrage(), antwortButton.getAntwort())) {
             antwortButton.setBackgroundColor(getResources().getColor(R.color.frageKorrekt));
         } else {
             antwortButton.setBackgroundColor(getResources().getColor(R.color.frageFalsch));
