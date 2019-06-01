@@ -3,6 +3,7 @@ package de.hsosnabrueck.bkquiz.webapi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -46,6 +47,10 @@ public class Frage {
 
     public void setKorrekteAntwort(Antwort korrekteAntwort) {
         this.korrekteAntwort = korrekteAntwort;
+    }
+
+    public void shuffleAntworten() {
+        Collections.shuffle(antwortMoeglichkeiten);
     }
 }
 
