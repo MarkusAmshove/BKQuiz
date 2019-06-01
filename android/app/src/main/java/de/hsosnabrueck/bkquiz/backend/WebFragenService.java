@@ -27,8 +27,8 @@ public class WebFragenService implements IFragenService {
 
             if(execute.isSuccessful()) {
                 String body = execute.body().string();
-                ServiceFrage serviceFrage = new Gson().fromJson(body, ServiceFrage.class);
-                Log.i("Service", body);
+                Frage serviceFrage = new Gson().fromJson(body, Frage.class);
+                return serviceFrage;
             }
 
             return null;
@@ -40,7 +40,23 @@ public class WebFragenService implements IFragenService {
 
     @Override
     public boolean beantworte(Frage frage, Antwort antwort) {
-        return false;
+        try {
+            Request request = new Request.Builder()
+                    .url(String.format("http://10.0.2.2:9090/fragen/beantworte?frageId=%d&antwortId=%d", frage.getId(), antwort.getId()))
+                    .post(RequestBody.create(JSON, ""))
+                    .build();
+            Response execute = httpClient.newCall(request).execute();
+
+            if(execute.isSuccessful()) {
+                boolean b = Boolean.parseBoolean(execute.body().string());
+                return b;
+            }
+
+            throw new RuntimeException("hilfe");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

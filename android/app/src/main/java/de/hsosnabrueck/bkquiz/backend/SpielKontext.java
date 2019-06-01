@@ -16,4 +16,8 @@ public class SpielKontext {
     public IFragenService getFragenService() {
         return fragenService;
     }
+
+    public SpielerStatistik ermittleStatistik() {
+        return fragenService.ermittleStatistik(spielername);
+    }
 }

@@ -1,14 +1,15 @@
 package de.hsosnabrueck.bkquiz.activities.quiz;
 
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.hsosnabrueck.bkquiz.CallbackTask;
 import de.hsosnabrueck.bkquiz.R;
 import de.hsosnabrueck.bkquiz.activities.LoginActivity;
 import de.hsosnabrueck.bkquiz.backend.Antwort;
@@ -40,8 +41,14 @@ public class FrageActivity extends AppCompatActivity {
     }
 
     private void neueFrage() {
-        Frage frage = spielKontext.getFragenService().naechsteFrage();
+        new CallbackTask<Frage>(this::ermittleFrage, this::zeigeFrage).execute();
+    }
 
+    private Frage ermittleFrage() {
+        return spielKontext.getFragenService().naechsteFrage();
+    }
+
+    private void zeigeFrage(Frage frage) {
         TextView frageText = findViewById(R.id.frageText);
         frageText.setText(frage.getFrage());
 
@@ -59,13 +66,17 @@ public class FrageActivity extends AppCompatActivity {
     private void antwortGeklickt(View view) {
         AntwortButton antwortButton = (AntwortButton) view;
 
-        if (spielKontext.getFragenService().beantworte(antwortButton.getFrage(), antwortButton.getAntwort())) {
-            antwortButton.setBackgroundColor(getResources().getColor(R.color.frageKorrekt));
-        } else {
-            antwortButton.setBackgroundColor(getResources().getColor(R.color.frageFalsch));
-        }
+        new CallbackTask<>(() -> spielKontext.getFragenService().beantworte(antwortButton.getFrage(), antwortButton.getAntwort()), korrekt -> {
+            if (korrekt) {
+                antwortButton.setBackgroundColor(getResources().getColor(R.color.frageKorrekt));
+            } else {
+                antwortButton.setBackgroundColor(getResources().getColor(R.color.frageFalsch));
+            }
 
-        aktualisiereStatistik(spielKontext.getFragenService().ermittleStatistik(spielKontext.getSpielername()));
+            aktualisiereStatistik();
+        }).execute();
+
+
 
         new CountDownTimer(1000, 1000) {
             @Override
@@ -79,6 +90,11 @@ public class FrageActivity extends AppCompatActivity {
             }
         }
         .start();
+    }
+
+    private void aktualisiereStatistik() {
+
+        new CallbackTask<>(() -> spielKontext.ermittleStatistik(), this::aktualisiereStatistik).execute();
     }
 
     private void aktualisiereStatistik(SpielerStatistik statistik) {

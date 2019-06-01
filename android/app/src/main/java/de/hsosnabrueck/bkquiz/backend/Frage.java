@@ -5,19 +5,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frage {
+    private long id;
     private String frage;
     private List<Antwort> antwortMoeglichkeiten;
-    private Antwort antwort;
 
-    public Frage(String frage, Antwort antwort, Antwort[] antwortMoeglichkeiten) {
+    public Frage(String frage, Antwort[] antwortMoeglichkeiten) {
         this.frage = frage;
-        this.antwort = antwort;
         this.antwortMoeglichkeiten = Arrays.asList(antwortMoeglichkeiten);
         Collections.shuffle(this.antwortMoeglichkeiten);
     }
 
-    public Antwort getAntwort() {
-        return antwort;
+    public Frage(long id, String frage, List<Antwort> antwortMoeglichkeiten) {
+        this.frage = frage;
+        this.antwortMoeglichkeiten = antwortMoeglichkeiten;
+        this.id = id;
     }
 
     public List<Antwort> getAntwortMoeglichkeiten() {
@@ -26,6 +27,10 @@ public class Frage {
 
     public String getFrage() {
         return frage;
+    }
+
+    public long getId() {
+        return id;
     }
 }
 
