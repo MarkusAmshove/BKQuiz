@@ -8,16 +8,17 @@ public class Antwort {
         this.antwort = antwort;
     }
 
+    public Antwort(long id, String antwort) {
+        this.antwort = antwort;
+        this.id = id;
+    }
+
     public String getAntwort() {
         return antwort;
     }
 
-    public long getId() {
+    long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }
 

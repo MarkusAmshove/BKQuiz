@@ -29,7 +29,7 @@ public class Frage {
         return frage;
     }
 
-    public long getId() {
+    long getId() {
         return id;
     }
 }

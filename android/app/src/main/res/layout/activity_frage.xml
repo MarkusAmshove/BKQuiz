@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/frageText"
-        android:text="Frage"
+        android:text="Lade Frage..."
         android:textStyle="italic"
         android:textSize="20sp"
         android:layout_width="wrap_content"

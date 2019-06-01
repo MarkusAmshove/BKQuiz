@@ -41,7 +41,7 @@ public class FrageActivity extends AppCompatActivity {
     }
 
     private void neueFrage() {
-        new CallbackTask<Frage>(this::ermittleFrage, this::zeigeFrage).execute();
+        new CallbackTask<>(this::ermittleFrage, this::zeigeFrage).execute();
     }
 
     private Frage ermittleFrage() {

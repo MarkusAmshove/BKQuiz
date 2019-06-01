@@ -23,8 +23,8 @@ public class FragenController {
 
     @RequestMapping(path = "naechste")
     public Frage naechsteFrage() {
-        long maxId = repository.count();
-        long zufaelligeId = zufallsGenerator.nextInt((int)maxId - 1) + 1L;
+        long anzahlFragen = repository.count();
+        long zufaelligeId = zufallsGenerator.nextInt((int)anzahlFragen - 1) + 1L;
         Optional<Frage> frage = repository.findById(zufaelligeId);
         frage.ifPresent(Frage::shuffleAntworten);
         return frage.orElse(new Frage());
