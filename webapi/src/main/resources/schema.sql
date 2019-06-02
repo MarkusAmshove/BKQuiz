@@ -1,3 +1,6 @@
+-- Fremdschluessel werden von Spring/Hibernate automatisch anhand der Annotations in Java-Klassen erzeugt
+
+
 CREATE TABLE IF NOT EXISTS antwort
 (
     id      INT PRIMARY KEY,
@@ -9,5 +12,5 @@ CREATE TABLE IF NOT EXISTS frage
 (
     id                  INT PRIMARY KEY,
     korrekte_antwort_id INT,
-    frage               text,
+    frage               text
 );
