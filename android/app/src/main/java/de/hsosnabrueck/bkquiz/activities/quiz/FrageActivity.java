@@ -29,7 +29,7 @@ public class FrageActivity extends AppCompatActivity {
         String spielername = getIntent().getStringExtra(LoginActivity.SPIELERNAME_INTENT);
         spielKontext = new SpielKontext(spielername);
 
-        aktualisiereStatistik(spielKontext.getFragenService().ermittleStatistik(spielername));
+        aktualisiereStatistik();
         neueFrage();
     }
 

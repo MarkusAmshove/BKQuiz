@@ -1,7 +1,9 @@
 package de.hsosnabrueck.bkquiz.webapi.controller;
 
 import de.hsosnabrueck.bkquiz.webapi.model.Frage;
+import de.hsosnabrueck.bkquiz.webapi.model.Statistik;
 import de.hsosnabrueck.bkquiz.webapi.repository.FragenRepository;
+import de.hsosnabrueck.bkquiz.webapi.repository.StatistikRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,11 @@ public class FragenController {
 
     private static final Random zufallsGenerator = new Random();
     private final FragenRepository repository;
+    private final StatistikRepository statistikRepository;
 
-    public FragenController(FragenRepository repository) {
+    public FragenController(FragenRepository repository, StatistikRepository statistikRepository) {
         this.repository = repository;
+        this.statistikRepository = statistikRepository;
     }
 
     @RequestMapping(path = "naechste")
@@ -31,9 +35,21 @@ public class FragenController {
     }
 
     @PostMapping(path = "beantworte")
-    public boolean beantworte(long frageId, long antwortId) {
-        return repository.findById(frageId)
+    public boolean beantworte(long frageId, long antwortId, String spielername) {
+        Boolean istKorrekt = repository.findById(frageId)
                 .map(f -> f.getKorrekteAntwort().getId() == antwortId)
                 .orElse(false);
+
+        Statistik statistik = statistikRepository.findeNachNamen(spielername);
+        if(statistik != null) {
+            if (istKorrekt) {
+                statistik.erhoeheKorrekteAntwort();
+            } else {
+                statistik.erhoeheFalscheAntwort();
+            }
+            statistikRepository.save(statistik);
+        }
+
+        return istKorrekt;
     }
 }

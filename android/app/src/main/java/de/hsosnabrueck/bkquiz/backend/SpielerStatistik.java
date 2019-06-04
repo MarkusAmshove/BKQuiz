@@ -2,11 +2,12 @@ package de.hsosnabrueck.bkquiz.backend;
 
 public class SpielerStatistik {
 
+    private String spielername;
     private int korrekteAntworten;
     private int falscheAntworten;
 
-    public SpielerStatistik(int korrekteAntworten, int falscheAntworten) {
-
+    public SpielerStatistik(String spielername, int korrekteAntworten, int falscheAntworten) {
+        this.spielername = spielername;
         this.korrekteAntworten = korrekteAntworten;
         this.falscheAntworten = falscheAntworten;
     }
@@ -33,5 +34,9 @@ public class SpielerStatistik {
 
     private void erhoeheFalscheAntworten() {
         falscheAntworten++;
+    }
+
+    public String getSpielername() {
+        return spielername;
     }
 }

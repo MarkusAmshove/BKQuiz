@@ -16,6 +16,11 @@ public class WebFragenService implements IFragenService {
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private static final String BASIS_URL = "http://10.0.2.2:9090";
     private final OkHttpClient httpClient = new OkHttpClient();
+    private final SpielKontext kontext;
+
+    public WebFragenService(SpielKontext kontext) {
+        this.kontext = kontext;
+    }
 
     @Override
     public Frage naechsteFrage() {
@@ -40,7 +45,7 @@ public class WebFragenService implements IFragenService {
     public boolean beantworte(Frage frage, Antwort antwort) {
         try {
             Request request = new Request.Builder()
-                    .url(String.format("%s/fragen/beantworte?frageId=%d&antwortId=%d", BASIS_URL, frage.getId(), antwort.getId()))
+                    .url(String.format("%s/fragen/beantworte?frageId=%d&antwortId=%d&spielername=%s", BASIS_URL, frage.getId(), antwort.getId(), kontext.getSpielername()))
                     .post(RequestBody.create(JSON, ""))
                     .build();
             Response execute = httpClient.newCall(request).execute();
@@ -57,6 +62,23 @@ public class WebFragenService implements IFragenService {
 
     @Override
     public SpielerStatistik ermittleStatistik(String spielername) {
-        return new SpielerStatistik(0, 0);
+        try {
+            Request request = new Request.Builder()
+                    .url(String.format("%s/statistik/spieler?name=%s", BASIS_URL, spielername))
+                    .build();
+
+            Response execute = httpClient.newCall(request).execute();
+
+            if(execute.isSuccessful()) {
+                String body = execute.body().string();
+                SpielerStatistik spielerStatistik = new Gson().fromJson(body, SpielerStatistik.class);
+                return spielerStatistik;
+            }
+
+            return null;
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

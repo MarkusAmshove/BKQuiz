@@ -14,3 +14,11 @@ CREATE TABLE IF NOT EXISTS frage
     korrekte_antwort_id INT,
     frage               text
 );
+
+CREATE TABLE IF NOT EXISTS statistik
+(
+    id                  INT PRIMARY KEY,
+    spielername         text,
+    korrekte_antworten  int,
+    falsche_antworten   int
+);
